@@ -11,6 +11,7 @@ win:
   icon: build/icon.png
   target:
     - nsis
+  artifactName: "Simple-Stack-TODO_Setup_${version}.${ext}"
 extraResources:
   - from: build/icon.png
     to: icon.png
