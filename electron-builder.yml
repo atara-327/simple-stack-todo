@@ -1,5 +1,5 @@
 appId: com.atara327.simplestacktod
-productName: My Stack TODO
+productName: Simple Stack TODO
 directories:
   output: release
   buildResources: build

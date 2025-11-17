@@ -1,4 +1,4 @@
-# My Stack TODO (Electron + React + TypeScript)
+# Simple Stack TODO (Electron + React + TypeScript)
 
 超シンプルな「積み上げ式」TODO デスクトップアプリ（Windows 11 / Electron）。
 
@@ -23,7 +23,7 @@ npm start       # dist を用いて Electron を起動
 ## インストーラー作成（タスクバーにピン留めしたい場合）
 ```bash
 npm run dist            # release/ に NSIS インストーラーを生成
-# 例) release/My Stack TODO Setup 1.0.0.exe
+# 例) release/Simple Stack TODO Setup 1.0.0.exe
 ```
 1. 生成されたセットアップ exe を実行してインストール
 2. スタートメニュー（またはインストール先）でアプリを右クリック → 「タスクバーにピン留め」

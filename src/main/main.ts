@@ -46,7 +46,7 @@ const createWindow = async () => {
   const win = new BrowserWindow({
     width: 480,
     height: 720,
-    title: "My Stack TODO",
+    title: "Simple Stack TODO",
     icon: iconPath,
     webPreferences: {
       contextIsolation: true,

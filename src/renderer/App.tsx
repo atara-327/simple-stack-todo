@@ -171,7 +171,7 @@ export const App = () => {
     <div className="min-h-screen bg-gray-50 px-6 py-8">
       <div className="mx-auto flex max-w-xl flex-col gap-6">
         <header className="flex flex-col gap-1 text-center">
-          <h1 className="text-3xl font-bold text-aqua-500">My Stack TODO</h1>
+          <h1 className="text-3xl font-bold text-aqua-500">Simple Stack TODO</h1>
         </header>
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
