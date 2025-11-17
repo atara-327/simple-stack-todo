@@ -1,0 +1,39 @@
+{
+  "name": "simple-stack-todo",
+  "version": "1.0.0",
+  "description": "Ultra-simple stack-style TODO desktop app (Electron + React + TS)",
+  "license": "MIT",
+  "author": "atara327",
+  "type": "commonjs",
+  "main": "dist/main/main.js",
+  "scripts": {
+    "dev": "concurrently -k \"npm:dev:main\" \"npm:dev:renderer\" \"npm:dev:electron\"",
+    "dev:main": "tsup src/main/main.ts src/main/preload.ts --format=cjs --target=node18 --sourcemap --dts --watch --out-dir dist/main --external electron",
+    "dev:renderer": "vite",
+    "dev:electron": "wait-on tcp:5173 dist/main/main.js dist/main/preload.js && electron .",
+    "build": "npm run build:main && npm run build:renderer",
+    "build:main": "tsup src/main/main.ts src/main/preload.ts --format=cjs --target=node18 --dts --out-dir dist/main --external electron",
+    "build:renderer": "vite build",
+    "start": "electron .",
+    "lint": "tsc --noEmit"
+  },
+  "dependencies": {
+    "electron": "^31.7.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.3",
+    "@types/react": "^18.3.11",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
+    "tsup": "^8.3.5",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "wait-on": "^7.2.0"
+  }
+}
