@@ -8,6 +8,16 @@ type UndoAction =
 
 const MAX_UNDO = 20;
 
+const partitionTodos = (list: Todo[]) => {
+  const active: Todo[] = [];
+  const completed: Todo[] = [];
+  list.forEach((todo) => {
+    if (todo.completedAt) completed.push(todo);
+    else active.push(todo);
+  });
+  return { active, completed };
+};
+
 const makeTodo = (title: string): Todo => ({
   id: crypto.randomUUID(),
   title: title.trim(),
@@ -39,7 +49,7 @@ export const App = () => {
     window.todoApi.saveTodos(next).catch((err) => console.warn("[todos] save failed", err));
   }, []);
 
-  const activeTodos = useMemo(() => todos.filter((t) => !t.completedAt), [todos]);
+  const activeTodos = useMemo(() => partitionTodos(todos).active, [todos]);
 
   const pushUndo = useCallback((action: UndoAction) => {
     setUndoStack((prev) => [...prev.slice(-(MAX_UNDO - 1)), action]);
@@ -50,8 +60,7 @@ export const App = () => {
       if (isBlank(title)) return;
       const nextTodo = makeTodo(title);
       setTodos((prev) => {
-        const active = prev.filter((t) => !t.completedAt);
-        const completed = prev.filter((t) => t.completedAt);
+        const { active, completed } = partitionTodos(prev);
         const next = [nextTodo, ...active, ...completed];
         persist(next);
         return next;
@@ -67,8 +76,7 @@ export const App = () => {
       setCompletingId(id);
       setTimeout(() => {
         setTodos((prev) => {
-          const active = prev.filter((t) => !t.completedAt);
-          const completed = prev.filter((t) => t.completedAt);
+          const { active, completed } = partitionTodos(prev);
           const index = active.findIndex((t) => t.id === id);
           if (index === -1) return prev;
           const target = active[index];
@@ -98,8 +106,7 @@ export const App = () => {
     (sourceId: string, targetId: string) => {
       if (sourceId === targetId) return;
       setTodos((prev) => {
-        const active = prev.filter((t) => !t.completedAt);
-        const completed = prev.filter((t) => t.completedAt);
+        const { active, completed } = partitionTodos(prev);
         const from = active.findIndex((t) => t.id === sourceId);
         const to = active.findIndex((t) => t.id === targetId);
         if (from < 0 || to < 0) return prev;
@@ -123,8 +130,9 @@ export const App = () => {
         if (last.type === "create") {
           next = current.filter((t) => t.id !== last.id);
         } else {
-          const active = current.filter((t) => !t.completedAt && t.id !== last.todo.id);
-          const completed = current.filter((t) => t.completedAt && t.id !== last.todo.id);
+          const { active, completed } = partitionTodos(
+            current.filter((t) => t.id !== last.todo.id)
+          );
           const restored: Todo = { ...last.todo, completedAt: null };
           const nextActive = [
             ...active.slice(0, last.index),
