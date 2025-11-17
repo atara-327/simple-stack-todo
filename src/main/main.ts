@@ -11,6 +11,9 @@ export type Todo = {
 
 const isDev = !app.isPackaged;
 const TODOS_FILE = "todos.json";
+const iconPath = isDev
+  ? path.join(__dirname, "../../build/icon.png")
+  : path.join(process.resourcesPath, "icon.png");
 
 const getTodosPath = () => path.join(app.getPath("userData"), TODOS_FILE);
 
@@ -44,6 +47,7 @@ const createWindow = async () => {
     width: 480,
     height: 720,
     title: "My Stack TODO",
+    icon: iconPath,
     webPreferences: {
       contextIsolation: true,
       preload: path.join(__dirname, "preload.js")

@@ -1,0 +1,20 @@
+appId: com.atara327.simplestacktod
+productName: My Stack TODO
+directories:
+  output: release
+  buildResources: build
+files:
+  - dist/main/**
+  - dist/renderer/**
+  - package.json
+win:
+  icon: build/icon.png
+  target:
+    - nsis
+extraResources:
+  - from: build/icon.png
+    to: icon.png
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
